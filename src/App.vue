@@ -22,6 +22,6 @@ const showModal = ref(false);
 .v-enter-from,
 .v-leave-to {
   opacity: 0;
-  transform: translate(50px);
+  transform: translateY(50px);
 }
 </style>

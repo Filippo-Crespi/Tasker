@@ -5,20 +5,20 @@
       <Divider />
       <FloatLabel variant="in">
         <label for="task-title">Title</label>
-        <InputText id="task-title" />
+        <InputText id="task-title" v-model="task.title" />
       </FloatLabel>
       <FloatLabel variant="in">
         <label for="task-text">Description</label>
-        <Textarea id="task-text" style="resize: none" rows="10" />
+        <Textarea id="task-text" style="resize: none" rows="10" v-model="task.description" />
       </FloatLabel>
       <FloatLabel variant="in">
         <label for="task-date">Date</label>
-        <DatePicker id="task-date" />
+        <DatePicker id="task-date" date-format="dd/mm/yy" show-button-bar v-model="task.date" />
       </FloatLabel>
       <div class="color-box">
-        <ColorPicker id="task-color" />
+        <ColorPicker id="task-color" v-model="task.color" />
       </div>
-      <button>Create</button>
+      <button @click="createTask()">Create</button>
       <button @click="$emit('closeModal')">Cancel</button>
     </div>
   </div>
@@ -26,6 +26,33 @@
 
 <script lang="ts" setup>
 import { InputText, Textarea, FloatLabel, DatePicker, ColorPicker, Divider } from "primevue";
+import { ref } from "vue";
+
+type Task = {
+  title: string | undefined;
+  description: string | undefined;
+  date: Date | undefined;
+  color: string | undefined;
+  completed: boolean | undefined;
+};
+
+const createTask = () => {
+  // for (let field in task.value) {
+  //   if (!task.value[field as keyof Task]) return;
+  // }
+
+  emit("closeModal");
+  emit("createTask", task.value);
+};
+
+const emit = defineEmits(["createTask", "closeModal"]);
+const task = ref<Task>({
+  title: undefined,
+  description: undefined,
+  date: undefined,
+  color: undefined,
+  completed: false,
+});
 </script>
 
 <style scoped>
